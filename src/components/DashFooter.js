@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const DashFooter = () => {
 
     const navigate = useNavigate()
-    const ( pathname ) = useLocation()
+    const { pathname } = useLocation()
 
     const onGoHomeClicked = () => navigate('/dash')
 
@@ -25,6 +25,7 @@ const DashFooter = () => {
     
     const content = (
         <footer className="dash-footer">
+            {goHomeButton}
             <p>Current User</p>
             <p>Status</p>
         </footer>
