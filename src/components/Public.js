@@ -25,5 +25,4 @@ const Public = () => {
     )
     return content
   }
-  
   export default Public;

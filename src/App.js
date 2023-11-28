@@ -11,7 +11,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-      {/* <Route exact path="/*" element={<appbody />} /> */}
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
 
@@ -27,7 +26,7 @@ function App() {
             <Route index element={<UsersList />} />
           </Route>
 
-        </Route>
+        </Route>{/* End Dash */}
         
       </Route>
     </Routes>
@@ -36,11 +35,12 @@ function App() {
 
 export default App;
 
+{/* <Route exact path="/*" element={<appbody />} /> */}
 // {
-//   "src": "logo192.png",
-//   "type": "image/png",
-//   "sizes": "192x192"
-// },
+  //   "src": "logo192.png",
+  //   "type": "image/png",
+  //   "sizes": "192x192"
+  // },
 // {
 //   "src": "logo512.png",
 //   "type": "image/png",
