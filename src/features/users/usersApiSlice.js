@@ -16,7 +16,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             keepUnusedDataFor: 5,
             transformResponse: responseData => {
                 const lodadedUsers = responseData.map(user => {
-                    user.id = user.__id
+                    user.id = user._id
                     return user
                 });
                 return usersAdapter.setAll(initialState, lodadedUsers)
@@ -27,8 +27,29 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                         { type: 'User', id: 'LIST' },
                         ...result.ids.map(id => ({ type: 'User', id }))
                     ]
-                } else return [{ type: 'User', id, 'LIST' }]
+                } else return [{ type: 'User', id: 'LIST' }]
             }
         }),
     }),
 })
+
+export const {
+    userGetUsersQuery,
+} = usersApiSlice
+
+// returns the query result object
+export const selectUsersResult = usersApiSlice.endpoints.getUsers.select()
+
+// creates memoized selector
+const selectUsersData = createSelector(
+    selectUsersResult,
+    usersResult => usersResult.data // normalized state object with ids & entities
+)
+
+// getSelectors creates these selectors and we rename them with aliases using destructuring
+export const {
+    selectAll: selectAllUsers,
+    selectById: selectUserById,
+    selectIds: selectUserIds
+    // Pass in a selector that returns the users slice of state
+} = usersAdapter.getSelectors(state => selectUsersData(state) ?? initialState)
