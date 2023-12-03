@@ -1,5 +1,8 @@
-import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
-import { apiSlice } from '../../app/api/apiSlice';
+import {
+    createSelector,
+    createEntityAdapter
+} from "@reduxjs/toolkit";
+import { apiSlice } from "../../app/api/apiSlice"
 
 const usersAdapter = createEntityAdapter({})
 
@@ -14,11 +17,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             },
             keepUnusedDataFor: 5,
             transformResponse: responseData => {
-                const lodadedUsers = responseData.map(user => {
+                const loadedUsers = responseData.map(user => {
                     user.id = user._id
                     return user
                 });
-                return usersAdapter.setAll(initialState, lodadedUsers)
+                return usersAdapter.setAll(initialState, loadedUsers)
             },
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
@@ -33,7 +36,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
-    userGetUsersQuery,
+    useGetUsersQuery,
 } = usersApiSlice
 
 // returns the query result object
@@ -45,7 +48,7 @@ const selectUsersData = createSelector(
     usersResult => usersResult.data // normalized state object with ids & entities
 )
 
-// getSelectors creates these selectors and we rename them with aliases using destructuring
+//getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
     selectAll: selectAllUsers,
     selectById: selectUserById,
