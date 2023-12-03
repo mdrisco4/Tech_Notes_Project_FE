@@ -1,5 +1,4 @@
 import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
-import { loadPlugin } from 'immer/dist/internal';
 import { apiSlice } from '../../app/api/apiSlice';
 
 const usersAdapter = createEntityAdapter({})
