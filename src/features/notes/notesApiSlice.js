@@ -1,5 +1,4 @@
 import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
-import { loadPlugin } from 'immer/dist/internal';
 import { apiSlice } from '../../app/api/apiSlice';
 
 const notesAdapter = createEntityAdapter({})
@@ -15,11 +14,11 @@ export const notesApiSlice = apiSlice.injectEndpoints({
             },
             keepUnusedDataFor: 5,
             transformResponse: responseData => {
-                const lodadedNotes = responseData.map(note => {
+                const loadedNotes = responseData.map(note => {
                     note.id = note._id
                     return note
                 });
-                return notesAdapter.setAll(initialState, lodadednotes)
+                return notesAdapter.setAll(initialState, loadedNotes)
             },
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
@@ -52,4 +51,4 @@ export const {
     selectById: selectNoteById,
     selectIds: selectNoteIds
     // Pass in a selector that returns the notes slice of state
-} = notesAdapter.getSelectors(state => selectnotesData(state) ?? initialState)
+} = notesAdapter.getSelectors(state => selectNotesData(state) ?? initialState)
