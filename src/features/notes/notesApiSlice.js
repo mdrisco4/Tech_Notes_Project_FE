@@ -34,7 +34,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
-    noteGetNotesQuery,
+    useGetNotesQuery,
 } = notesApiSlice
 
 // returns the query result object
