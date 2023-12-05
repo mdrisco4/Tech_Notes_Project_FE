@@ -20,7 +20,7 @@ const PWD_REGEX = /^[A-z0-9!@#$%]{4, 12}$/
         const navigate = useNavigate()
 
         const [username, setUsername] = useState('')
-        const [validusername, setvalidUsername] = useState(false)
+        const [validUsername, setvalidUsername] = useState(false)
         const [password, setPassword] = useState('')
         const [validPassword, setvalidPassword] = useState(false)
         const [roles, setRoles] = useState(["Employee"])
@@ -32,6 +32,35 @@ const PWD_REGEX = /^[A-z0-9!@#$%]{4, 12}$/
         useEffect(() => {
             setvalidPassword(PWD_REGEX.test(password))
         }, [password])
+
+        useEffect(() => {
+            if (isSuccess) {
+                setUsername('')
+                setPassword('')
+                setRoles([])
+                navigate('/dash/users')
+            }
+        }, [isSuccess, navigate])
+
+    const onUserNameChanged = e => setUsername(e.target.value)
+    const onPasswordChanged = e => setPassword(e.target.value)
+
+const onRolesChanged = e => {
+    const values = Array.from(
+        e.target.selectedOptions, //HTML Collection
+        (option) = option.value
+    )
+    setRoles(values)
+}
+
+const canSave = [roles.length, validUsername, validPassword.every(Boolean) && !isLoading]
+
+const onSaveUserClicked = async (e) => {
+    e.preventDefault()
+    if (canSave) {
+        await addNewUser({ username, password, roles })
+    }
+}
 
     return (
         <div>NewUserForm</div>
