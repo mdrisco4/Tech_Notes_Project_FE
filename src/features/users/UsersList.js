@@ -1,4 +1,4 @@
-import { useGetUsersQuery, useAddNewUserMutation, useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice"
+import { useGetUsersQuery } from "./usersApiSlice"
 import User from './User'
 
 const UsersList = () => {
