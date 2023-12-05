@@ -40,6 +40,55 @@ const EditUserForm = ({ user }) => {
         setValidPassword(PWD_REGEX.test(password))
     }, [password])
 
+    useEffect(() => {
+        if (isSuccess || isDelSuccess) {
+            setUsername('')
+            setPassword('')
+            setRoles([])
+            navigate('/dash/users')
+        }
+        
+    }, [isSuccess, isDelSuccess, navigate])
+
+    const onUserNameChanged = e => setUsername(e.target.value)
+    const onPasswordChanged = e => setUsername(e.target.value)
+
+    const onRolesChanged = e => {
+        const values = Array.from(
+            e.target.selectedOptions,
+            (option) => option.value
+        )
+        setRoles(values)
+    }
+
+    const onActiveChanged = () => setActive(prev => !prev)
+
+    const onSaveUserClicked = async (e) => {
+        if (password) {
+            await updateUser({ id: user.id, username, password, roles, active })
+        } else {
+            await updateUser({ id: user.id, username, roles, active })
+        }
+    }
+
+    const onDeleteUserClicked = async () => {
+        await deleteUser({ id: user.id })
+    }
+
+    let canSave
+    if (password) {
+        canSave = [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
+    } else {
+        canSave = [roles.length, validUsername].every(Boolean) && !isLoading
+    }
+
+    const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
+    const validUserClass = !validUsername ? 'fomr__input--incomplete' : ''
+    const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
+    const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+
+    const errContent = (error?.data?.message || delError?.data?.message) ?? ''
+
     return (
         <div>EditUserForm</div>
     )
