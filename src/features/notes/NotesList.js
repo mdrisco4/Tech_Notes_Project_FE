@@ -1,4 +1,4 @@
-import { useGetNotesQuery } from "./notesApiSlice"
+import { useGetNotesQuery, useAddNewNoteMutation, useUpdateNoteMutation, useDeleteNoteMutation } from "./notesApiSlice"
 import Note from "./Note"
 
 const NotesList = () => {
