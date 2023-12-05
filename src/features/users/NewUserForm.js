@@ -48,12 +48,12 @@ const PWD_REGEX = /^[A-z0-9!@#$%]{4, 12}$/
 const onRolesChanged = e => {
     const values = Array.from(
         e.target.selectedOptions, //HTML Collection
-        (option) = option.value
+        (option) => option.value
     )
     setRoles(values)
 }
 
-const canSave = [roles.length, validUsername, validPassword.every(Boolean) && !isLoading]
+const canSave = [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
 
 const onSaveUserClicked = async (e) => {
     e.preventDefault()
@@ -62,8 +62,82 @@ const onSaveUserClicked = async (e) => {
     }
 }
 
+const options = Object.values(ROLES).map(role => {
     return (
-        <div>NewUserForm</div>
+        <option
+            key={role}
+            value={role}
+
+        > {role}</option >
     )
+})
+
+
+const errClass = isError ? "errmsg" : "offscreen"
+const validUserClass = !validUsername ? 'form__input--incomplete' : ''
+const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
+const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+
+const content = (
+    <>
+        <p className="{errClass}">{error?.data?.message}</p>
+    
+        <form className="form" onSubmit={onSaveUserClicked}>
+            <div className="form__title-row">
+                <h2>New User</h2>
+                <div className="form__action-buttons">
+                    <button
+                        className="icon-button"
+                        title="Save"
+                        disabled={!canSave}
+                    >
+                        <FontAwesomeIcon icon={faSave} />
+                    </button>
+                </div>
+            </div>
+            <label className="form__Label" htmlFor="username">
+                Username: <span className="nowrap">[3-20 letters]</span>
+            </label>
+            <input
+                className={`form__input ${validUserClass}`}
+                id="username"
+                type="text"
+                autoComplete="off"
+                value={username}
+                onChange={onUserNameChanged}
+            />
+
+            <label className="form__label" htmlFor="password">
+                Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span>
+            </label>
+            <input
+                className={`form__input ${validPwdClass}`}
+                id="password"
+                type="password"
+                autoComplete="password"
+                value={password}
+                onChange={onPasswordChanged}
+            />
+
+            <label className="form__label" htmlFor="roles">
+                ASSIGNED ROLES:
+            </label>
+            <select
+                id="roles"
+                name="roles"
+                className={`form__select ${validRolesClass}`}
+                multiple={true}
+                size="3"
+                value={roles}
+                onChange={onRolesChanged}
+            >
+                {options}
+            </select>
+        </form>
+    </>
+)
+
+
+    return content
 }
 export default NewUserForm
