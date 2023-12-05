@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { selectNoteById } from "./notesApiSlice";
-import { Title } from "@material-ui/icons";
 
 const Note = ({ noteId }) => {
     const note = useSelector(state => selectNoteById(state, noteId))
