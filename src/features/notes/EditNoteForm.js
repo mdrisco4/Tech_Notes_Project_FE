@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 
-const EditNoteForm = () => {
+const EditNoteForm = ({ note, users }) => {
 
     const [updateNote, {
         isLoading,
@@ -43,7 +43,7 @@ const EditNoteForm = () => {
 
     const canSave = [title, text,userId].every(Boolean) && !isLoading
 
-    const on onSaveNoteClicked = async (e) => {
+    const onSaveNoteClicked = async (e) => {
         if (canSave) {
             await updateNote({ id: note.id, user: userId, title, text, completed })
         }
@@ -85,7 +85,7 @@ const EditNoteForm = () => {
                         <button
                             className="icon-button"
                             title="Save"
-                            onClick={onSaveUserClicked}
+                            onClick={onSaveNoteClicked}
                             disabled={!canSave}
                         >
                             <FontAwesomeIcon icon={faSave} />
@@ -143,7 +143,7 @@ const EditNoteForm = () => {
                             id="note-username"
                             name="username"
                             className="form__select"
-                            value={userid}
+                            value={userId}
                             onChange={onUserIdChanged}
                         >
                             {options}
